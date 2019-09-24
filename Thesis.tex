@@ -1,0 +1,305 @@
+\documentclass[a4paper, 12pt, twoside]{report}
+
+% need these two packages to use biber correctly
+%\usepackage{biblatex}[style=ieee]
+\usepackage[style=authoryear, % cite with authoryear
+            citestyle=authoryear,
+%           sorting=none,     % refs appear in the order they are cited
+            backend=biber,    % use biber
+            dashed=false,     % so same author doesnt show up 2nd time as '----'
+            natbib=true,      % allow citep and citet
+            uniquename=false, % turn off differentiating between authors of same
+                              % name in in-line citations, 
+                              % i.e. no "Q. Wang" and "Z. Wang", only "Wang".
+            giveninits,       % always use intials for name in bibliography
+            uniquelist=false, % needed to make maxnames work... :(
+            maxcitenames=3,   % 3 names (when citing) before going to 'et al'
+            mincitenames=1,   % Name et al when citing names > above.
+            maxbibnames=10,   % limit to 10 names in bibliography
+            minbibnames=10,   % before limiting to 10 + et.al.
+            backref=true,
+            backrefstyle=three,
+            ]{biblatex}
+\DeclareNameAlias{sortname}{given-family} % change to firstname-lastname
+\usepackage[UKenglish]{babel} % British English hyphenation rules
+\usepackage{csquotes}
+\addbibresource{refs.bib}
+
+% reduce font size in captions (default = \normalsize)
+\usepackage{caption}
+\captionsetup{font=small}
+
+% fancy headers
+\usepackage{fancyhdr}
+
+% colours for things
+\usepackage[usenames, dvipsnames, svgnames, table]{xcolor}
+
+% tables
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+
+% change things in itemize
+\usepackage{enumitem}
+
+% algorithms stuff
+\usepackage{braket}
+\usepackage{algorithm} % float wrapper for algorithms
+\usepackage{algpseudocode} % also loads algorithmicx
+% change Require: to Input:
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} 
+% change Ensure: to Output:
+\renewcommand{\algorithmicensure}{\textbf{Output:}} 
+% Remove arrow from comment and make itallic
+\algrenewcommand\algorithmiccomment[1]{\hfill\textit{ #1 }} 
+
+% figures
+\usepackage{subcaption}
+\usepackage{multirow, makecell}
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\interdisplaylinepenalty=2500
+\usepackage{IEEEtrantools}
+
+% acknowledgement quote
+\usepackage{epigraph}
+\renewcommand{\epigraphsize}{\large\itshape}
+\setlength\epigraphwidth{10cm}
+\setlength\epigraphrule{0pt}
+
+\newcommand{\first}[1]{\textcolor{red}{#1}}
+\newcommand{\second}[1]{\textcolor{blue}{#1}}
+\newcommand{\third}[1]{\textcolor{ForestGreen}{#1}}
+
+%%%%%%% UNIVERSITY GUIDELINES
+% PAPER: International A4 (210mm x 297mm) or US Letter size
+% (216mm x 279mm) within range 70 g/m2 to 100 g/m2. No
+% restrictions are placed on the size of the drawings, maps or
+% similar material, which should, however, be bound in with
+% the thesis/dissertation or placed in a wallet affixed to the
+% inside of the back cover.
+%% taken care of in documentclass
+
+% TYPING: Double or one-and-a-half spacing should be used in
+% typescript except for indented quotations or footnotes, for
+% which single spacing may be used.
+\usepackage[doublespacing]{setspace}
+
+% MARGINS: 30mm on the left and right-hand sides, 
+% 20mm on the top and bottom margins.
+\usepackage[a4paper, 
+            left=30mm, right=30mm,
+			top=20mm, bottom=20mm]{geometry}
+%\usepackage[]{showframe} % uncomment to show frames around pages
+%%%%%%% 
+
+% allows more space at the bottom of the page to stop all the warnings from 
+% latex as well as the large gaps that can appear between paragraphs.
+\makeatletter
+ \def\@textbottom{\vskip \z@ \@plus 24pt}
+ \let\@texttop\relax
+\makeatother
+
+%% Set paragraph indentation.
+\setlength{\parindent}{30pt}
+
+%% set gap between footer and main text
+\setlength{\footskip}{40pt}
+
+\usepackage{breakcites}
+\usepackage{microtype}
+
+% title and date of thesis
+\newcommand{\thesisTitle}{THESIS TITLE HERE}
+\newcommand{\thesisDate}{MONTH, YEAR}
+\newcommand{\thesisMyName}{YOUR NAME HERE}
+
+% Copyright declaration.
+\newcommand{\statement}{
+\vspace{5mm}
+\begin{flushleft}
+\small\onehalfspacing\normalsize
+Submitted by \thesisMyName, to the University of Exeter as a thesis for the
+degree of Doctor of Philosophy in Computer Science, \thesisDate . 
+\linebreak
+
+This thesis is available for Library use on the understanding that it is
+copyright material and that no quotation from the thesis may be published
+without proper acknowledgement.
+\linebreak
+
+I certify that all material in this thesis which is not my own work has been
+identified and that no material has previously been submitted and approved
+for the award of a degree by this or any other University.
+
+%\vspace{50mm}
+\vfill
+Signed: \makebox[3in]{\dotfill}\\[-3pt]
+\end{flushleft}
+}
+
+% Set the titlepage properties.   
+\author{}
+
+\title{\vspace{-30mm}
+\large{University of Exeter \\[-3mm]
+	      Department of Computer Science}\\[20mm]
+    \begin{spacing}{1.0}
+	\huge{\textbf{\thesisTitle}}\\[10mm]
+	\end{spacing}
+    \Large{\thesisMyName}
+}
+\date{\statement}
+
+%%%% CHANGE '1 Chapter \n Chapter name' to:
+%           '1 Chapter name'
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{40\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \interlinepenalty\@M
+    \Huge \bfseries
+    \ifnum \c@secnumdepth >\m@ne
+      \thechapter.\nobreakspace
+    \fi
+    #1\par\nobreak
+    \vskip 40\p@
+  }}
+\makeatother
+%%%% 
+
+% *** NEW COMMANDS ***
+% for \ie \eg
+\usepackage{xspace}
+\newcommand*{\eg}{e.g.\@\xspace}
+\newcommand*{\ie}{i.e.\@\xspace}
+
+% better empty set symbol
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+%%%%
+
+% clicky links
+\usepackage[pdftex, hyperfootnotes=false]{hyperref}
+\usepackage{footnotebackref}
+
+\hypersetup{
+ hidelinks, % takes no value, hides all link colour
+% colorlinks=true,
+% citecolor=RoyalBlue,
+% linkcolor=RoyalBlue,
+% urlcolor=RoyalBlue,
+ pdftitle = {\thesisTitle},        % FILL THIS IN LATER!
+ pdfauthor = {{\thesisMyName}}
+}
+
+%%% Back refernces in bibliography: 
+% make sure it says 'on pages xx, xx, and xx' (we added the 'and')
+\DeclareListFormat{pageref}{%
+    \ifthenelse{\value{listcount}=1}%
+        {\hyperpage{#1}}%
+        {\ifthenelse{\value{listcount}<\value{liststop}}%
+            {\addcomma\addspace\hyperpage{#1}}%
+            {\ifnumequal{\value{listcount}}{\value{liststop}}%
+                {\addspace{}and\addspace\hyperpage{#1}}{}%
+            }%
+        }%
+}%
+
+% better capitalisation.
+\DefineBibliographyStrings{english}{%
+  backrefpage = {Cited on page},% originally "cited on page"
+  backrefpages = {Cited on pages},% originally "cited on pages"
+}
+
+%%%%%%%%% Make it so the entire citation (author names and year) are coloured
+\DeclareFieldFormat{citehyperref}{%
+  \DeclareFieldAlias{bibhyperref}{noformat}% Avoid nested links
+  \bibhyperref{#1}}
+
+\DeclareFieldFormat{textcitehyperref}{%
+  \DeclareFieldAlias{bibhyperref}{noformat}% Avoid nested links
+  \bibhyperref{%
+    #1%
+    \ifbool{cbx:parens}
+      {\bibcloseparen\global\boolfalse{cbx:parens}}
+      {}}}
+
+\savebibmacro{cite}
+\savebibmacro{textcite}
+
+\renewbibmacro*{cite}{%
+  \printtext[citehyperref]{%
+    \restorebibmacro{cite}%
+    \usebibmacro{cite}}}
+
+\renewbibmacro*{textcite}{%
+  \ifboolexpr{
+    ( not test {\iffieldundef{prenote}} and
+      test {\ifnumequal{\value{citecount}}{1}} )
+    or
+    ( not test {\iffieldundef{postnote}} and
+      test {\ifnumequal{\value{citecount}}{\value{citetotal}}} )
+  }
+    {\DeclareFieldAlias{textcitehyperref}{noformat}}
+    {}%
+  \printtext[textcitehyperref]{%
+    \restorebibmacro{textcite}%
+    \usebibmacro{textcite}}}
+    
+%%%%%%%
+
+\begin{document}
+%% TITLE PAGE
+\maketitle
+
+\pagenumbering{roman} % start with roman numbering
+
+% ABSTRACT
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+\include{ch0/abstract}
+
+%% Acknowledgements.
+\phantomsection
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\include{ch0/acknowledgements}
+
+%% TABLES OF CONTENTS / FIGURES / TABLES
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+%% INTRODUCTION
+\newpage
+\pagenumbering{arabic} % switch to real page numbers now we're into the content
+\include{ch1/introduction}
+
+%% LITERATURE REVIEW
+\include{ch2/literaturereview}
+
+%% MAIN CONTENT CHAPTERS
+\include{ch3/ch3}
+
+%% 
+\include{ch4/ch4}
+
+%% 
+\include{ch5/ch5}
+
+%% 
+\include{ch6/ch6}
+
+% SUMMARY AND CONCLUSION
+\include{ch7/summaryconclusion}
+
+%% BIBLIOGRAPHY
+% \setlength{\bibhang}{0pt}  <-- do this if we wanna remove bib indent
+\emergencystretch=1em
+\printbibliography
+
+\end{document}
