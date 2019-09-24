@@ -1,4 +1,5 @@
 *.aux
+*-blx.bib
 *.bcf
 *.synctex.gz
 *.lof
